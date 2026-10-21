@@ -1,0 +1,49 @@
+name: star-configs
+on:
+  schedule:
+    - cron: "7 * * * *"
+  workflow_dispatch:
+concurrency:
+  group: star-configs
+  cancel-in-progress: false
+permissions:
+  contents: write
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 0 }
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install pyrofork==2.3.69 tgcrypto aiohttp
+      - run: python bot_gh.py
+        env:
+          API_ID: ${{ secrets.API_ID }}
+          API_HASH: ${{ secrets.API_HASH }}
+          SESSION_STRING: ${{ secrets.SESSION_STRING }}
+          SOURCE: ${{ secrets.SOURCE }}
+          DESTS: ${{ secrets.DESTS }}
+          TAG_TEXT: ${{ secrets.TAG_TEXT || 'tel:@khazan01311' }}
+          HEADER: ${{ secrets.HEADER }}
+          QUOTE: ${{ secrets.QUOTE }}
+          CHANNEL: ${{ secrets.CHANNEL }}
+          PACK_SIZE: "3"
+          PACK_EVERY: "600"
+          MAX_MINUTES: "50"
+          INITIAL_SCAN: "0"
+          GH_REPO: "Argh94/V2RayAutoConfig"
+          GH_BRANCH: "main"
+          GH_FOLDER: "configs"
+          GH_TAIL: "40"
+          TEST_ENABLED: "0"
+          TEST_LIMIT: "300"
+          REPORT: "1"
+      - name: Save state
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet || (git commit -m "state update [skip ci]" && git push)
