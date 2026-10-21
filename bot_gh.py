@@ -11,7 +11,7 @@ DESTS    = [d.strip() for d in os.environ.get("DESTS", "").split(",") if d.strip
 TAG_TEXT = os.environ.get("TAG_TEXT") or "tel:@khazan01311"
 HEADER   = os.environ.get("HEADER")  or "🔥 NEW SERVER\n\n⚡ Ultra Ping\n🚀 Fresh Config Pack"
 QUOTE    = os.environ.get("QUOTE")   or "اینترنت آزاد حق مردم است ✌️\n\nفرزند ایران و جان‌فدای میهن 🖤❤️‍🩹"
-CHANNEL  = os.environ.get("CHANNEL") or "📡 @star_shop_vpn"
+CHANNEL  = os.environ.get("CHANNEL") or "📡 @khazan01311"
 
 GH_REPO   = os.environ.get("GH_REPO")   or "Argh94/V2RayAutoConfig"
 GH_BRANCH = os.environ.get("GH_BRANCH") or "main"
